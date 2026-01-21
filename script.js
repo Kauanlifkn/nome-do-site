@@ -261,7 +261,7 @@ window.cleanGhosts = function() {
         alert("Limpeza feita!");
     });
 };
-window.updPE = async (k,d) => { let s=await db.ref('users/'+k).once('value'); let pe=(s.val().pe||0)+d, pts=(s.val().pts||0)+(d*10); if(pe>=0) db.ref('users/'+k).update({pe,pts}); };
+window.updPE = async (k,d) => { let s=await db.ref('users/'+k).once('value'); let pe=(s.val().pe||0)+d, pts=(s.val().pts||0)+(d*15); if(pe>=0) db.ref('users/'+k).update({pe,pts}); };
 window.delUser = (k) => { if(confirm("Excluir?")) { delete rankMemory[k]; db.ref('users/'+k).remove(); } };
 window.editUser = (k,n,t,a) => {
     editingId=k; document.getElementById('inp-name').value=n; document.getElementById('inp-team').value=t;
