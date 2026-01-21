@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - J3</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body style="display:flex; align-items:center; justify-content:center;">
+
+    <div class="glass-card" style="max-width:400px;">
+        <h2 style="text-align:center; margin-bottom:20px;">J3 ACESSO</h2>
+        
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <button onclick="showLogin()" style="flex:1; background:var(--juda-color); border:none; padding:10px; border-radius:8px; color:#fff; cursor:pointer;">Entrar</button>
+            <button onclick="showReg()" style="flex:1; background:rgba(255,255,255,0.1); border:none; padding:10px; border-radius:8px; color:#fff; cursor:pointer;">Cadastrar</button>
+        </div>
+
+        <form id="form-login">
+            <input type="email" id="log-email" placeholder="Seu E-mail" required style="margin-bottom:10px;">
+            <input type="password" id="log-pass" placeholder="Sua Senha" required>
+            <button type="submit" class="btn-primary">ENTRAR</button>
+        </form>
+
+        <form id="form-register" class="hidden">
+            <div style="text-align:center; margin-bottom:10px;">
+                <label style="cursor:pointer; display:block;">
+                    <span style="font-size:12px; color:#aaa;">Toque p/ foto</span><br>
+                    <input type="file" id="reg-file" class="hidden">
+                    <div style="width:60px; height:60px; background:#333; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center;">📷</div>
+                </label>
+            </div>
+
+            <input type="text" id="reg-name" placeholder="Nome Completo" required style="margin-bottom:10px;">
+            <input type="email" id="reg-email" placeholder="E-mail" required style="margin-bottom:10px;">
+            <input type="password" id="reg-pass" placeholder="Crie uma Senha" required style="margin-bottom:10px;">
+            
+            <select id="reg-team" style="margin-bottom:10px;">
+                <option value="juda">Time Judá (Azul)</option>
+                <option value="reman">Time Remanescentes (Amarelo)</option>
+            </select>
+
+            <button type="submit" id="btn-reg" class="btn-primary">CRIAR CONTA</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function showLogin(){ 
+            document.getElementById('form-login').classList.remove('hidden');
+            document.getElementById('form-register').classList.add('hidden');
+        }
+        function showReg(){ 
+            document.getElementById('form-login').classList.add('hidden');
+            document.getElementById('form-register').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

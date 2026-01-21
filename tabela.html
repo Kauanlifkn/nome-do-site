@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking Oficial</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="overlay-screen">
+        <div id="countdown-number" style="font-size:150px; font-weight:900; color:#fff;"></div>
+    </div>
+
+    <nav class="glass-card" style="display:flex; justify-content:space-between; align-items:center; max-width:900px; margin:0 auto 20px;">
+        <h3>🏆 CLASSIFICAÇÃO</h3>
+        <div style="display:flex; gap:10px;">
+            <button id="btn-reveal-podium" class="hidden" style="background: linear-gradient(45deg, #ff9f0a, #ff453a); border:none;">✨ REVELAR PÓDIO</button>
+            <a href="index.html"><button class="btn-primary" style="width:auto; padding:8px 20px; margin:0;">Voltar</button></a>
+        </div>
+    </nav>
+
+    <div style="max-width:900px; margin:0 auto;">
+        
+        <div id="final-podium" class="podium-section glass-card">
+            <div class="podium-card podium-2" id="pod-2"></div>
+            <div class="podium-card podium-1" id="pod-1"></div>
+            <div class="podium-card podium-3" id="pod-3"></div>
+        </div>
+
+        <div id="admin-ranking-manager" class="glass-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 id="form-title" style="color:var(--success); margin:0;">➕ Adicionar Participante</h3>
+                <button id="btn-cancel" class="hidden" style="width:auto; padding:5px 10px; background:#333; font-size:12px;">Cancelar</button>
+            </div>
+            <div class="upload-wrapper">
+                <label for="file-input" class="upload-circle">
+                    <img id="preview-img">
+                    <span id="label-img" style="font-size:10px; color:#aaa;">FOTO</span>
+                </label>
+                <input type="file" id="file-input" accept="image/*" class="hidden">
+                <div style="flex:1;">
+                    <input type="text" id="inp-name" placeholder="Nome do Aluno">
+                    <select id="inp-team" style="margin:0;">
+                        <option value="" disabled selected>Equipe...</option>
+                        <option value="juda">🔵 Judá</option>
+                        <option value="reman">🟡 Remanescentes</option>
+                    </select>
+                </div>
+                <button id="btn-save" class="btn-primary" style="width:100px; height:85px;">SALVAR</button>
+            </div>
+        </div>
+
+        <div class="glass-card" style="padding:0; overflow:hidden;">
+            <table id="ranking-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px; text-align:center;">#</th>
+                        <th style="width:30px;"></th>
+                        <th>PARTICIPANTE</th>
+                        <th>PE (x10)</th>
+                        <th style="text-align:right;">PTS</th>
+                        <th style="text-align:center; width:80px;">AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

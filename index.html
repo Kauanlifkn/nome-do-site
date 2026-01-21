@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J3 Placar</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="overlay-screen">
+        <div id="countdown-number"></div>
+        <div id="champion-display" class="hidden" style="text-align:center;">
+            <h2 style="color:#aaa; letter-spacing:5px;">CAMPEÃO</h2>
+            <img id="champ-logo" src="" style="width:150px; height:150px; border-radius:50%; margin:20px; border:5px solid #fff;">
+            <h1 id="champ-name" style="font-size:60px;">TIME</h1>
+            <div id="champ-score" style="font-size:30px; margin-top:10px;">0 PTS</div>
+            <button onclick="location.reload()" style="margin-top:30px; width:auto; padding:10px 40px; background:#fff; color:#000;">Voltar</button>
+        </div>
+    </div>
+
+    <nav class="glass-card" style="display:flex; justify-content:space-between; align-items:center; padding:15px; max-width:1200px; margin:0 auto 20px;">
+        <h3 style="margin:0;">J3 GINCANA</h3>
+        <div style="display:flex; gap:15px; align-items:center;">
+            
+            <a href="login.html" id="btn-login-nav" class="hidden">
+                <button class="btn-login" style="width:auto; padding:8px 20px; margin:0;">ENTRAR 🔑</button>
+            </a>
+
+            <span id="magic-lock" class="hidden" style="cursor:pointer; font-size:20px;">🔒</span>
+            
+            <a href="tabela.html"><button class="btn-primary" style="width:auto; padding:8px 20px; margin:0;">Ranking Individual</button></a>
+            
+            <span id="btnLogout" class="hidden" style="color:#ff3b30; cursor:pointer; font-size:12px;">SAIR</span>
+        </div>
+    </nav>
+
+    <div class="dashboard-grid">
+        
+        <main>
+            <div class="glass-card">
+                <div class="scoreboard-header">
+                    <div class="team-container team-juda">
+                        <img src="https://media.discordapp.net/attachments/1148703998434619435/1460270505536782356/Captura_de_tela_2026-01-12_105000.png?ex=6970da63&is=696f88e3&hm=5b3649ab9773c48cf8f75b1e9757a6f65e3853efa685f10f186bb2d8ef3294d2&=&format=webp&quality=lossless" class="team-logo">
+                        <div class="score-display" id="score-juda">0</div>
+                        <h4>JUDÁ</h4>
+                    </div>
+                    <div style="font-size:30px; opacity:0.3;">X</div>
+                    <div class="team-container team-reman">
+                        <img src="https://media.discordapp.net/attachments/1148703998434619435/1460757092490149888/Captura_de_tela_2026-01-13_185227.png?ex=69714e0e&is=696ffc8e&hm=e58f3d0f86b66cfe70ef352962e87cb6edc703895790a175fc74acd4bf4611e6&=&format=webp&quality=lossless" class="team-logo">
+                        <div class="score-display" id="score-reman">0</div>
+                        <h4>REMAN.</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div id="admin-panel" class="glass-card">
+                <h3 style="margin-bottom:15px; color:var(--success);">📢 Lançar Atividade (Equipe)</h3>
+                
+                <div class="team-selector">
+                    <div class="radio-team" data-value="juda">🔵 Judá</div>
+                    <div class="radio-team" data-value="both">⚪ AMBAS</div>
+                    <div class="radio-team" data-value="reman">🟡 Reman.</div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="act-name" placeholder="Nome da Atividade" style="flex:2">
+                    <input type="number" id="act-pts" placeholder="Pts" style="flex:1">
+                </div>
+                <input type="text" id="act-obs" placeholder="Observação (Opcional)">
+
+                <button id="btn-send-score" class="btn-primary">ENVIAR</button>
+            </div>
+
+            <div class="glass-card">
+                <h4 style="margin-bottom:15px; opacity:0.7;">HISTÓRICO DE ATIVIDADES</h4>
+                <div style="overflow-x:auto;">
+                    <table id="history-table">
+                        <thead><tr><th>Atividade</th><th>Equipe</th><th style="text-align:right;">Pts</th></tr></thead>
+                        <tbody><tr><td colspan="3" style="text-align:center;">Carregando...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="glass-card" style="height:100%;">
+                <h3 style="margin-bottom:20px;">🏆 Top 3 Ranking</h3>
+                <ul id="podium-list" style="list-style:none;">
+                    </ul>
+                <div style="text-align:center; margin-top:20px; font-size:13px; opacity:0.6;">
+                    Pontos individuais somam no placar geral.
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <div id="danger-zone" class="glass-card hidden" style="max-width:600px; margin:0 auto; display:flex; gap:10px;">
+        <button id="btn-reset" class="btn-warning">⚠ REINICIAR JOGO</button>
+        <button id="btn-end" class="btn-danger">🏁 ENCERRAR JOGO</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
